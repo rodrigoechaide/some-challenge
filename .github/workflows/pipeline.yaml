@@ -1,0 +1,41 @@
+name: "some-challenge pipeline"
+on:
+  push:
+    branches:
+    - main
+    - dev
+  pull_request:
+    branches:
+    - main
+    - dev
+jobs:
+  terraform:
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    defaults:
+      run:
+        working-directory: terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: "checkout repository"
+        uses: actions/checkout@v2
+      - name: "unit tests"
+        run: echo "running unit tests"
+      - name: "install terraform"
+        uses: hashicorp/setup-terraform@v1
+      - name: "terraform initialization"
+        run: terraform init
+      - name: "select proper terraform workspace"
+        run: terraform workspace select ${{ github.ref }}
+        if: github.event_name == 'push'
+      - name: "select proper terraform workspace"
+        run: terraform workspace select ${{ github.base_ref }}
+        if: github.event_name == 'pull_request'
+      - name: "validate terraform code"
+        run: terraform validate
+      - name: "terraform plan"
+        run: terraform plan -out=terraform.plan
+      - name: "terraform automatic apply only in dev environment"
+        run: terraform apply terraform.plan -auto-approve
+        if: github.event_name == 'push'

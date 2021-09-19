@@ -103,8 +103,31 @@ Steps to spin up the local environment:
 
 ## Production and Development Environments
 
-TBC
+To automatically deploy the code to the Development and Production environments github actions together with terraform are used. A github action workflow is triggered each time a push or pull request event is triggered to the branches `dev` and `main`.
+
+If the event is a Pull Request event to either `dev` or `main` branches the following steps are run:
+
+* Code checkout
+* Python unit tests
+* Terraform installation
+* Terraform initialization
+* Terraform workspace selection
+* Terraform code validation
+* Terraform plan
+
+If the event is a push event to either `dev` or `main` branches the following steps are run:
+
+* Code checkout
+* Python unit tests
+* Terraform installation
+* Terraform initialization
+* Terraform workspace selection
+* Terraform code validation
+* Terraform plan
+* Terraform apply
 
 ## Improvements
 
-TBC
+* Manual approval workflow for production deployments
+* Route53 Integration
+* Cognito Integration for Authentication
