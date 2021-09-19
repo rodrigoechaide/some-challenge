@@ -8,6 +8,7 @@ def dynamodb_connector():
 
   ENVIRONMENT = os.getenv("ENVIRONMENT")
   TABLE_NAME = os.getenv("TABLE_NAME")
+
   if ENVIRONMENT == "local":
     dynamodb = boto3.resource('dynamodb', endpoint_url="http://dynamodb:8000")
   else:
