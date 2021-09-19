@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "Hello Challenge Application"
+Resources:
+  HelloFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: ../app/
+      Handler: main.lambda_handler
+      Runtime: python3.9
+      Environment:
+        Variables:
+          ENVIRONMENT: "local"
+          TABLE_NAME: "birthdays_table"
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /hello/{username}
+            Method: get
+        PutEvent:
+          Type: Api
+          Properties:
+            Path: /hello/{username}
+            Method: put
+  BirthdaysTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: birthdays_table
+      AttributeDefinitions:
+        - AttributeName: username
+          AttributeType: S
+      KeySchema:
+        - AttributeName: username
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
