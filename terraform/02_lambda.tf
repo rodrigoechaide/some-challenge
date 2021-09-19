@@ -108,3 +108,11 @@ resource "aws_lambda_function" "app" {
   }
 
 }
+
+resource "aws_lambda_permission" "apigateway" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.app.function_name}"
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.main.execution_arn}/*/*"
+}
