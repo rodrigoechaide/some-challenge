@@ -27,7 +27,7 @@ jobs:
       - name: "terraform initialization"
         run: terraform init
       - name: "select proper terraform workspace"
-        run: terraform workspace select ${{ github.ref }}
+        run: terraform workspace select ${GITHUB_REF##*/}
         if: github.event_name == 'push'
       - name: "select proper terraform workspace"
         run: terraform workspace select ${{ github.base_ref }}
