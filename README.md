@@ -91,7 +91,7 @@ Steps to spin up the local environment:
 * Start the local environment using sam. Note that the command should be run inside the folder `local-execution`
 
     ```bash
-    cd local-execution
+    cd hello/local-execution
     sam local start-api --docker-network some-challenge
     ```
 
@@ -128,6 +128,7 @@ If the event is a push event to either `dev` or `main` branches the following st
 
 ## Improvements
 
+* Integration tests
 * Manual approval workflow for production deployments
-* Route53 Integration
-* Cognito Integration for Authentication
+* Route53 integration
+* Cognito integration for authentication

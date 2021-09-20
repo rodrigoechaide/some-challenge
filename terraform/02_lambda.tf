@@ -80,12 +80,13 @@ resource "aws_iam_role_policy_attachment" "app" {
 
 data "archive_file" "app" {
   type        = "zip"
-  source_file = "../app/main.py"
-  output_path = "../app/main.zip"
+  source_dir  = "../hello/app/"
+  excludes    = [ "requirements.txt", "__pycache__" ]
+  output_path = "../hello/app.zip"
 }
 
 resource "aws_lambda_function" "app" {
-  filename      = "../app/main.zip"
+  filename      = "../hello/app.zip"
   function_name = "${terraform.workspace}-${var.project_name}"
   role          = aws_iam_role.app.arn
   handler       = "main.lambda_handler"
