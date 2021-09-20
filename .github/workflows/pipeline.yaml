@@ -9,7 +9,7 @@ on:
     - main
     - dev
 jobs:
-  terraform:
+  some-challenge-pipeline:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -20,8 +20,18 @@ jobs:
     steps:
       - name: "checkout repository"
         uses: actions/checkout@v2
-      - name: "unit tests"
-        run: echo "running unit tests"
+      - name: set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: "install unit-tests dependencies"
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r test-requirements.txt
+        working-directory: hello/tests
+      - name: "run unit-tests"
+        run: python -m unittest -v
+        working-directory: hello/tests
       - name: "install terraform"
         uses: hashicorp/setup-terraform@v1
       - name: "terraform initialization"

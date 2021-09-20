@@ -24,6 +24,11 @@ Resources:
           Properties:
             Path: /hello/{username}
             Method: put
+        DefaultEvent:
+          Type: Api
+          Properties:
+            Path: $default
+            Method: any
   BirthdaysTable:
     Type: AWS::DynamoDB::Table
     Properties:
