@@ -128,7 +128,10 @@ If the event is a push event to either `dev` or `main` branches the following st
 
 ## Improvements
 
-* Integration tests
+* Add pylint step to the pipeline
+* Improve unit-tests coverage
+  * Finish and improve database unit-tests using moto to mock dynamoDB
+* Implement integration tests
 * Manual approval workflow for production deployments
 * Route53 integration
 * Cognito integration for authentication
