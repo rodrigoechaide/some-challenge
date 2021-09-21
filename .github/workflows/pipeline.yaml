@@ -1,4 +1,4 @@
-name: "some-challenge pipeline"
+name: "some-challenge-pipeline"
 on:
   push:
     branches:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: "checkout repository"
         uses: actions/checkout@v2
-      - name: set up Python 3.9
+      - name: set up python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
